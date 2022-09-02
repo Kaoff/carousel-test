@@ -21,6 +21,7 @@ export const StyledThumbnailImg = styled.div<StyledThumbnailImgProps>`
     border-radius: 8px;
     background: url(${props => props.imageUrl});
     background-position: center;
+    background-size: 100%;
 `;
 
 export const StyledThumbnailButton = styled.button`
@@ -41,4 +42,5 @@ export const StyledName = styled.div`
     line-height: 17px;
     max-width: 200px;
     line-break: auto;
+    text-align: center;
 `;

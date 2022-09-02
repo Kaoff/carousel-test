@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { gql, useQuery } from "@apollo/client";
+import { useEffect, useState } from "react";
 import { CarouselItem } from "../CarouselItem/CarouselItem";
 import { LeftIcon } from "../Icons/LeftIcon/LeftIcon";
 import { RightIcon } from "../Icons/RightIcon/RightIcon";
@@ -6,66 +7,58 @@ import { StyledCarousel, StyledItemsOverflowHider, StyledItemsWrapper, StyledNav
 import { CarouselItemType } from "./Carousel.types";
 
 export const Carousel: React.FC = () => {
-    const [items, setItems] = useState<CarouselItemType[]>([
-        {
-            id: '1',
-            name: 'Coucou',
-            image: 'https://picsum.photos/200/300?random=1',
-        },
-        {
-            id: '2',
-            name: 'Coucou',
-            image: 'https://picsum.photos/200/300?random=2',
-        },
-        {
-            id: '3',
-            name: 'Coucou',
-            image: 'https://picsum.photos/200/300?random=3',
-        },
-        { 
-            id: '4',
-            name: 'Coucou',
-            image: 'https://picsum.photos/200/300?random=4',
-        },
-        { 
-            id: '5',
-            name: 'CoucouCou couCoucouCoucou CoucouCoucouC oucouCoucouCoucou CoucouCoucouCoucouCoucou CoucouCoucou  CoucouCoucou CoucouCoucou',
-            image: 'https://picsum.photos/200/300?random=5',
-        },
-        { 
-            id: '6',
-            name: 'Coucou',
-            image: 'https://picsum.photos/200/300?random=6',
-        }
-    ]);
-
     const [offset, setOffset] = useState<number>(0);
 
+    const { loading, error, data } = useQuery<CarouselItemType>(gql`
+        query MyQuery {
+            program {
+                thumnail {
+                    url
+                }
+                name
+                id
+            }
+        }
+    `);
+
+
+    if (loading) return <p>Loading...</p>;
+
     const onNavClick = (buttonPosition: 'left' | 'right') => {
+        if (!data) return;
+
         if (buttonPosition === 'left' && offset < 0) {
             setOffset(offset + 224);
         }
 
-        if (buttonPosition === 'right' && offset > -224 * (items.length - 5)) {
+        if (buttonPosition === 'right' && offset > -224 * (data.program.length - 5)) {
             setOffset(offset - 224);
         }
     }
 
     return (
         <StyledCarousel>
-            <StyledNavButton onClick={() => onNavClick('left')}  position="left">
-                <LeftIcon />
-            </StyledNavButton>
+            {
+                offset < 0 && (
+                    <StyledNavButton onClick={() => onNavClick('left')}  position="left">
+                        <LeftIcon />
+                    </StyledNavButton>
+                )
+            }
             <StyledItemsOverflowHider>
                 <StyledItemsWrapper offset={offset}>
-                    {items.map(item => (
-                        <CarouselItem key={item.id} imageUrl={item.image} name={item.name} />
+                    {data?.program.map(item => (
+                        <CarouselItem key={item.id} imageUrl={item.thumnail.url} name={item.name} />
                     ))}
                 </StyledItemsWrapper>
             </StyledItemsOverflowHider>
-            <StyledNavButton onClick={() => onNavClick('right')} position="right">
-                <RightIcon />
-            </StyledNavButton>
+            {
+                data && offset > -224 * (data.program.length - 5) && (
+                    <StyledNavButton onClick={() => onNavClick('right')} position="right">
+                        <RightIcon />
+                    </StyledNavButton>
+                )
+            }
         </StyledCarousel>
     )
 }

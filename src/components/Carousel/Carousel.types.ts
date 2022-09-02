@@ -1,5 +1,9 @@
 export interface CarouselItemType {
-    id: string;
-    name: string;
-    image: string;
+    program: Array<{
+        id: string;
+        name: string;
+        thumnail: {
+            url: string;
+        };
+    }>;
 }
