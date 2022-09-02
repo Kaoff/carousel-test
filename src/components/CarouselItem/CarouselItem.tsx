@@ -1,3 +1,4 @@
+import { AddIcon } from "../AddIcon/AddIcon";
 import { StyledCarouselItem, StyledName, StyledThumbnailButton, StyledThumbnailImg, StyledThumnailWrapper } from "./CarouselItem.styles";
 import { CarouselItemProps } from "./CarouselItem.types";
 
@@ -6,7 +7,9 @@ export const CarouselItem: React.FC<CarouselItemProps> = ({ imageUrl, name }) =>
         <StyledCarouselItem>
             <StyledThumnailWrapper>
                 <StyledThumbnailImg imageUrl={imageUrl} />
-                <StyledThumbnailButton />
+                <StyledThumbnailButton>
+                    <AddIcon />
+                </StyledThumbnailButton>
             </StyledThumnailWrapper>
             <StyledName>{name}</StyledName>
         </StyledCarouselItem>

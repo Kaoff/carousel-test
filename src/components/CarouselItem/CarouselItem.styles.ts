@@ -30,6 +30,10 @@ export const StyledThumbnailButton = styled.button`
    position: absolute;
    bottom: 6px;
    right: 7px;
+   border-radius: 8px;
+   background: rgba(0, 0, 0, 0.7);
+   border: none;
+   cursor: pointer;
 `;
 
 export const StyledName = styled.div`
