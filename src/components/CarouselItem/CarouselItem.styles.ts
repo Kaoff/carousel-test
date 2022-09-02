@@ -38,4 +38,7 @@ export const StyledThumbnailButton = styled.button`
 
 export const StyledName = styled.div`
     color: white;
+    line-height: 17px;
+    max-width: 200px;
+    line-break: auto;
 `;

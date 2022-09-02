@@ -1,4 +1,4 @@
-import { AddIcon } from "../AddIcon/AddIcon";
+import { AddIcon } from "../Icons/AddIcon/AddIcon";
 import { StyledCarouselItem, StyledName, StyledThumbnailButton, StyledThumbnailImg, StyledThumnailWrapper } from "./CarouselItem.styles";
 import { CarouselItemProps } from "./CarouselItem.types";
 
